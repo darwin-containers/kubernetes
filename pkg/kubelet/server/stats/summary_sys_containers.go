@@ -1,5 +1,5 @@
-//go:build !windows
-// +build !windows
+//go:build !darwin && !windows
+// +build !darwin,!windows
 
 /*
 Copyright 2018 The Kubernetes Authors.

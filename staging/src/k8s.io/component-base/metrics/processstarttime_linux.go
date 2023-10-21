@@ -1,8 +1,5 @@
-//go:build !unix
-// +build !unix
-
 /*
-Copyright 2016 The Kubernetes Authors.
+Copyright 2019 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,13 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package rlimit
+package metrics
 
 import (
-	"errors"
+	"os"
+
+	"github.com/prometheus/procfs"
 )
 
-// SetNumFiles sets the rlimit for the maximum open files.
-func SetNumFiles(maxOpenFiles uint64) error {
-	return errors.New("SetRLimit unsupported in this platform")
+func getProcessStart() (float64, error) {
+	pid := os.Getpid()
+	p, err := procfs.NewProc(pid)
+	if err != nil {
+		return 0, err
+	}
+
+	if stat, err := p.Stat(); err == nil {
+		return stat.StartTime()
+	}
+	return 0, err
 }

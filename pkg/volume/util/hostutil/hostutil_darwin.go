@@ -1,6 +1,3 @@
-//go:build !darwin && !linux && !windows
-// +build !darwin,!linux,!windows
-
 /*
 Copyright 2014 The Kubernetes Authors.
 
@@ -55,7 +52,7 @@ func (hu *HostUtil) GetDeviceNameFromMount(mounter mount.Interface, mountPath, p
 
 // MakeRShared always returns an error on unsupported platforms
 func (hu *HostUtil) MakeRShared(path string) error {
-	return errUnsupported
+	return nil
 }
 
 // GetFileType always returns an error on unsupported platforms

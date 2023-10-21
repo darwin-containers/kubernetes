@@ -1,6 +1,3 @@
-//go:build !darwin && !linux && !windows
-// +build !darwin,!linux,!windows
-
 /*
 Copyright 2015 The Kubernetes Authors.
 
@@ -20,8 +17,6 @@ limitations under the License.
 package cm
 
 import (
-	"fmt"
-
 	"k8s.io/mount-utils"
 
 	v1 "k8s.io/api/core/v1"
@@ -33,16 +28,16 @@ import (
 	"k8s.io/kubernetes/pkg/kubelet/status"
 )
 
-type unsupportedContainerManager struct {
+type containerManagerImpl struct {
 	containerManagerStub
 }
 
-var _ ContainerManager = &unsupportedContainerManager{}
+var _ ContainerManager = &containerManagerImpl{}
 
-func (unsupportedContainerManager) Start(_ *v1.Node, _ ActivePodsFunc, _ config.SourcesReady, _ status.PodStatusProvider, _ internalapi.RuntimeService, _ bool) error {
-	return fmt.Errorf("Container Manager is unsupported in this build")
+func (containerManagerImpl) Start(_ *v1.Node, _ ActivePodsFunc, _ config.SourcesReady, _ status.PodStatusProvider, _ internalapi.RuntimeService, _ bool) error {
+	return nil
 }
 
 func NewContainerManager(_ mount.Interface, _ cadvisor.Interface, _ NodeConfig, failSwapOn bool, recorder record.EventRecorder, kubeClient clientset.Interface) (ContainerManager, error) {
-	return &unsupportedContainerManager{}, nil
+	return &containerManagerImpl{}, nil
 }

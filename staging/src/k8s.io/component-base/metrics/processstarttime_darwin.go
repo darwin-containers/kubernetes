@@ -1,8 +1,5 @@
-//go:build linux
-// +build linux
-
 /*
-Copyright 2016 The Kubernetes Authors.
+Copyright 2019 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package rlimit
+package metrics
 
 import (
-	"golang.org/x/sys/unix"
+	"fmt"
+	"runtime"
 )
 
-// SetNumFiles sets the linux rlimit for the maximum open files.
-func SetNumFiles(maxOpenFiles uint64) error {
-	return unix.Setrlimit(unix.RLIMIT_NOFILE, &unix.Rlimit{Max: maxOpenFiles, Cur: maxOpenFiles})
+func getProcessStart() (float64, error) {
+	return 0, fmt.Errorf("getProcessStart is unsupported on " + runtime.GOOS)
 }

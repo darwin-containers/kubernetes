@@ -278,6 +278,6 @@ func SetDefaults_KubeletConfiguration(obj *kubeletconfigv1beta1.KubeletConfigura
 		obj.LocalStorageCapacityIsolation = utilpointer.Bool(true)
 	}
 	if obj.ContainerRuntimeEndpoint == "" {
-		obj.ContainerRuntimeEndpoint = "unix:///run/containerd/containerd.sock"
+		obj.ContainerRuntimeEndpoint = "unix:///var/run/containerd/containerd.sock"
 	}
 }
